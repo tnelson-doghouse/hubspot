@@ -175,7 +175,7 @@ func (c Client) objectPath(object string, path string, version string) {
 				rv += "/" + path
 			}
 		default:
-			Error "Version not implemented yet"
+			errors.Errorf("Version not implemented yet")
 	}
 
 	return rv
