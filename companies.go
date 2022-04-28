@@ -52,9 +52,9 @@ type CompanyProperties struct {
 }
 
 // List Companies constructor
-func (c Client) CompaniesList() []Companies {
+func (c Client) CompaniesList(nextlink string) ([]CompaniesListResponse, error) {
 	r := CompaniesListResponse{}
-	err := c.Client.Request("GET", c.objectPath("companies", "", "v3"), nil, &r)
+	err := c.Client.Request("GET", c.objectPath("companies", nextlink, "v3"), nil, &r)
 	return r, err
 }
 
