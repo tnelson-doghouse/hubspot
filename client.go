@@ -168,10 +168,10 @@ func (c Client) objectPath(object string, path string, version string) {
 		version = "v3"
 	}
 	switch version {
-		case 'v3':
+		case "v3":
 			rv = fmt.Sprintf("/crm/%s/objects/%s", version, object)
 			if path != "" {
-				rv += '/' + path
+				rv += "/" + path
 			}
 		default:
 			Error "Version not implemented yet"
