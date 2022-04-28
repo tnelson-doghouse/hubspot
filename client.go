@@ -3,6 +3,7 @@ package hubspot
 import (
 	"bytes"
 	"encoding/json"
+	"error"
 	"fmt"
 	"io/ioutil"
 	"net"
