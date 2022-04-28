@@ -55,13 +55,13 @@ type CompanyProperties struct {
 }
 
 // List Companies constructor
-func (c Client) CompaniesList(nextlink string) ([]CompaniesResponse, error) {
+func (c Client) CompaniesList(nextlink string) (CompaniesListResponse, error) {
 	r := CompaniesListResponse{}
 	err := c.Request("GET", c.objectPath("companies", nextlink, "v3"), nil, &r)
 	if err != nil {
 		fmt.Print(err)
 	}
-	return r.Results, err
+	return r, err
 }
 
 
