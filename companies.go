@@ -1,6 +1,9 @@
 package hubspot
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+)
 
 // Companies client
 type Companies struct {
@@ -52,7 +55,7 @@ type CompanyProperties struct {
 }
 
 // List Companies constructor
-func (c Client) CompaniesList(nextlink string) ([]CompaniesListResponse, error) {
+func (c Client) CompaniesList(nextlink string) ([]CompaniesResponse, error) {
 	r := CompaniesListResponse{}
 	err := c.Request("GET", c.objectPath("companies", nextlink, "v3"), nil, &r)
 	if err != nil {
