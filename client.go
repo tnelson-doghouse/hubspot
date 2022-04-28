@@ -161,3 +161,21 @@ func (c Client) Request(method, endpoint string, data, response interface{}) err
 	// Done!
 	return nil
 }
+
+// Generate a path for an object, optionally with a version
+func (c Client) objectPath(object string, path string, version string) {
+	if version == "" {
+		version = "v3"
+	}
+	switch version {
+		case 'v3':
+			rv = fmt.Sprintf("/crm/%s/objects/%s", version, object)
+			if path != "" {
+				rv += '/' + path
+			}
+		default:
+			Error "Version not implemented yet"
+	}
+
+	return rv
+}
