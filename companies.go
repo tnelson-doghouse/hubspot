@@ -57,7 +57,7 @@ type CompanyProperties struct {
 
 // List Companies constructor
 func (c Client) CompaniesList(nextlink string) (CompaniesListResponse, error) {
-	pattern := regexp.MustCompile("^https?\:\/\/[^/]+")
+	pattern := regexp.MustCompile("^https?://[^/]+")
 	path := pattern.ReplaceAllString(nextlink, "")
 	r := CompaniesListResponse{}
 	err := c.Request("GET", c.objectPath("companies", path, "v3"), nil, &r)
