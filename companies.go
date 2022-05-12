@@ -64,7 +64,7 @@ func (c Client) CompaniesList(nextlink string, relative bool) (CompaniesListResp
 		path = c.objectPath("companies", path, "v3")
 	} else {
 		pattern := regexp.MustCompile("^https?://[^/]+")
-		path := pattern.ReplaceAllString(nextlink, "")
+		path = pattern.ReplaceAllString(nextlink, "")
 	}
 	r := CompaniesListResponse{}
 	err := c.Request("GET", path, nil, &r)
