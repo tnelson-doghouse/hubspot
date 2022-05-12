@@ -49,9 +49,9 @@ type CompaniesListResponse struct {
 
 // CompanyProperties response object
 type CompanyProperties struct {
-	CreateDate  ResponseProperty `json:"createdate"`
-	Name        ResponseProperty `json:"name"`
-	Description ResponseProperty `json:"description"`
+	CreateDate  date `json:"createdate"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }
 
 // List Companies constructor
