@@ -144,7 +144,7 @@ func (c Client) Request(method, endpoint string, data, response interface{}) err
 	if err != nil {
 		return fmt.Errorf("hubspot.Client.Request(): ioutil.ReadAll(): %v", err)
 	}
-	if resp.Status > 299 {
+	if resp.StatusCode > 299 {
 		return fmt.Errorf("hubspot.Client.Request(): HTTP Error fetching '%s': %v \n%s", uri, err, string(body))
 	}
 
