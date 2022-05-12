@@ -146,10 +146,7 @@ func (c Client) Request(method, endpoint string, data, response interface{}) err
 		return fmt.Errorf("hubspot.Client.Request(): ioutil.ReadAll(): %v", err)
 	}
 	if resp.StatusCode > 299 {
-		return fmt.Errorf(
-			"hubspot.Client.Request(): HTTP Error fetching '%s' (%s || %s || %s): %v \n%s", 
-			uri, u.String(), c.config.APIHost, uri2, err, string(body)
-		)
+		return fmt.Errorf("hubspot.Client.Request(): HTTP Error fetching '%s' (%s || %s || %s): %v \n%s", uri, u.String(), c.config.APIHost, uri2, err, string(body))
 	}
 
 	// Get data?
