@@ -62,19 +62,19 @@ func NewClient(config ClientConfig) Client {
 }
 
 // addAPIKey adds HUBSPOT_API_KEY param to a given URL.
-func (c Client) addAPIKey(u string) (string, error) {
+func (c Client) addAPIKey(uri url) (url, error) {
 	if c.config.APIKey != "" {
-		uri, err := url.Parse(u)
+/*		uri, err := url.Parse(u)
 		if err != nil {
 			return u, err
-		}
+		} */
 		q := uri.Query()
 		q.Set("hapikey", c.config.APIKey)
 		uri.RawQuery = q.Encode()
-		u = uri.String()
+//		u = uri.String()
 	}
 
-	return u, nil
+	return uri, nil
 }
 
 // Request executes any HubSpot API method using the current client configuration
@@ -85,18 +85,32 @@ func (c Client) Request(method, endpoint string, data, response interface{}) err
 	if err != nil {
 		return fmt.Errorf("hubspot.Client.Request(): url.Parse(): %v", err)
 	}
-	u.Path = path.Join(u.Path, endpoint)
+	pattern := regexp.MustCompile("([^?]+)(\?(.*))?")
+	matches := regexp.FindStringSubmatch(endpoint, -1)
+	ep_path := matches[0][1]
+	ep_variables := matches[0][3]
+	u.Path = path.Join(u.Path, ep_path)
+
+	q := u.Query()
+	for pair := ep_variables.Split() {
+		pattern := regexp.MustCompile("(\w+)=(\w+)")
+		matches := regexp.FindStringSubmatch(pair, -1)
+		q.Set(matches[0][1], matches[0][2])
+	}
+	u.RawQuery = q.Encode()
+
 	uri4 := u.String()
 
 	// API Key authentication
-	uri := u.String()
-	uri2 := uri
 	if c.config.APIKey != "" {
-		uri, err = c.addAPIKey(uri)
+//		uri, err = c.addAPIKey(uri)
+		u, err = c.addAPIKey(u)
 		if err != nil {
 			return fmt.Errorf("hubspot.Client.Request(): c.addAPIKey(): %v", err)
 		}
 	}
+	uri := u.String()
+	uri2 := uri
 
 	// Init request object
 	var req *http.Request
