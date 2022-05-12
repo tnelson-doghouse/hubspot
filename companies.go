@@ -56,11 +56,18 @@ type CompanyProperties struct {
 }
 
 // List Companies constructor
-func (c Client) CompaniesList(nextlink string) (CompaniesListResponse, error) {
-	pattern := regexp.MustCompile("^https?://[^/]+")
-	path := pattern.ReplaceAllString(nextlink, "")
+// If relative = true, then nextlink = a relative path that needs to be run through objectPath
+// If relative = false, then nextlink = a full path (protocol and hostname will be stripped away)
+func (c Client) CompaniesList(nextlink string, relative bool) (CompaniesListResponse, error) {
+	path := ""
+	if relative {
+		path = c.objectPath("companies", path, "v3")
+	} else {
+		pattern := regexp.MustCompile("^https?://[^/]+")
+		path := pattern.ReplaceAllString(nextlink, "")
+	}
 	r := CompaniesListResponse{}
-	err := c.Request("GET", c.objectPath("companies", path, "v3"), nil, &r)
+	err := c.Request("GET", path, nil, &r)
 	if err != nil {
 		fmt.Print(err)
 	}
