@@ -3,6 +3,7 @@ package hubspot
 import (
 	"fmt"
 	"strconv"
+	"regex"
 )
 
 // Companies client
