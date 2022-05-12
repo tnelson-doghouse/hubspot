@@ -11,6 +11,7 @@ import (
 	"os"
 	"path"
 	"time"
+	"regexp"
 )
 
 // ClientConfig object used for client creation
@@ -62,7 +63,7 @@ func NewClient(config ClientConfig) Client {
 }
 
 // addAPIKey adds HUBSPOT_API_KEY param to a given URL.
-func (c Client) addAPIKey(uri url) (url, error) {
+func (c Client) addAPIKey(uri URL) (URL, error) {
 	if c.config.APIKey != "" {
 /*		uri, err := url.Parse(u)
 		if err != nil {
@@ -85,7 +86,7 @@ func (c Client) Request(method, endpoint string, data, response interface{}) err
 	if err != nil {
 		return fmt.Errorf("hubspot.Client.Request(): url.Parse(): %v", err)
 	}
-	pattern := regexp.MustCompile("([^?]+)(\?(.*))?")
+	pattern := regexp.MustCompile("([^?]+)(\\?(.*))?")
 	matches := regexp.FindStringSubmatch(endpoint, -1)
 	ep_path := matches[0][1]
 	ep_variables := matches[0][3]
