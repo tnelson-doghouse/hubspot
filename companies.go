@@ -49,7 +49,7 @@ type CompaniesListResponse struct {
 
 // CompanyProperties response object
 type CompanyProperties struct {
-	CreateDate  date `json:"createdate"`
+	CreateDate  string `json:"createdate"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 }
