@@ -96,7 +96,7 @@ func (c Client) Request(method, endpoint string, data, response interface{}) err
 	for pair := range regexp.MustCompile("&").Split(ep_variables, -1) {
 //	for pair := ep_variables.Split() {
 		pattern := regexp.MustCompile(`(\w+)=(\w+)`)
-		matches := pattern.FindStringSubmatch(pair, -1)
+		matches := pattern.FindStringSubmatch(pair)
 		q.Set(matches[1], matches[2])
 	}
 	u.RawQuery = q.Encode()
