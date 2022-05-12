@@ -93,7 +93,7 @@ func (c Client) Request(method, endpoint string, data, response interface{}) err
 	u.Path = path.Join(u.Path, ep_path)
 
 	q := u.Query()
-	for pair := range regexp.MustCompile("&").Split(ep_variables, -1) {
+	for index, pair := range regexp.MustCompile("&").Split(ep_variables, -1) {
 //	for pair := ep_variables.Split() {
 		pattern := regexp.MustCompile(`(\w+)=(\w+)`)
 		matches := pattern.FindStringSubmatch(pair)
