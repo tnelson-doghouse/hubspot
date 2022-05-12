@@ -86,18 +86,18 @@ func (c Client) Request(method, endpoint string, data, response interface{}) err
 	if err != nil {
 		return fmt.Errorf("hubspot.Client.Request(): url.Parse(): %v", err)
 	}
-	pattern := regexp.MustCompile("([^?]+)(\\?(.*))?")
-	matches := pattern.FindStringSubmatch(endpoint, -1)
-	ep_path := matches[0][1]
-	ep_variables := matches[0][3]
+	pattern := regexp.MustCompile(`([^?]+)(\?(.*))?`)
+	matches := pattern.FindStringSubmatch(endpoint)
+	ep_path := matches[1]
+	ep_variables := matches[3]
 	u.Path = path.Join(u.Path, ep_path)
 
 	q := u.Query()
 	for pair := range regexp.MustCompile("&").Split(ep_variables, -1) {
 //	for pair := ep_variables.Split() {
-		pattern := regexp.MustCompile("(\w+)=(\w+)")
+		pattern := regexp.MustCompile(`(\w+)=(\w+)`)
 		matches := pattern.FindStringSubmatch(pair, -1)
-		q.Set(matches[0][1], matches[0][2])
+		q.Set(matches[1], matches[2])
 	}
 	u.RawQuery = q.Encode()
 
