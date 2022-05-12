@@ -81,10 +81,12 @@ func (c Client) addAPIKey(u string) (string, error) {
 func (c Client) Request(method, endpoint string, data, response interface{}) error {
 	// Construct endpoint URL
 	u, err := url.Parse(c.config.APIHost)
+	uri3 := u.String()
 	if err != nil {
 		return fmt.Errorf("hubspot.Client.Request(): url.Parse(): %v", err)
 	}
 	u.Path = path.Join(u.Path, endpoint)
+	uri4 := u.String()
 
 	// API Key authentication
 	uri := u.String()
@@ -146,7 +148,7 @@ func (c Client) Request(method, endpoint string, data, response interface{}) err
 		return fmt.Errorf("hubspot.Client.Request(): ioutil.ReadAll(): %v", err)
 	}
 	if resp.StatusCode > 299 {
-		return fmt.Errorf("hubspot.Client.Request(): HTTP Error fetching '%s' (%s || %s || %s): %v \n%s", uri, u.String(), c.config.APIHost, uri2, err, string(body))
+		return fmt.Errorf("hubspot.Client.Request(): HTTP Error fetching '%s' (%s || %s): %v \n%s\nuri2: %s\nuri3: %s\nuri4: %s\nendpoint: %s\n", uri, u.String(), c.config.APIHost err, string(body), uri2, uri3, uri4, endpoint)
 	}
 
 	// Get data?
