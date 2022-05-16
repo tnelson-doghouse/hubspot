@@ -66,8 +66,8 @@ func (c Client) CompaniesList(nextlink string, relative bool) (CompaniesListResp
 		pattern := regexp.MustCompile("^https?://[^/]+")
 		path = pattern.ReplaceAllString(nextlink, "")
 	}
-	return nil, fmt.Errorf("hubspot.Companies.CompaniesList(): Using path %s", path)
 	r := CompaniesListResponse{}
+	return r, fmt.Errorf("hubspot.Companies.CompaniesList(): Using path %s", path)
 	err := c.Request("GET", path, nil, &r)
 	if err != nil {
 		fmt.Print(err)
