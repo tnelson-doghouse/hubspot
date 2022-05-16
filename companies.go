@@ -67,8 +67,8 @@ func (c Client) CompaniesList(nextlink string, relative bool) (CompaniesListResp
 		path = pattern.ReplaceAllString(nextlink, "")
 	}
 	r := CompaniesListResponse{}
-	return r, fmt.Errorf("hubspot.Companies.CompaniesList(): Using path %s", path)
 	err := c.Request("GET", path, nil, &r)
+	return r, fmt.Errorf("hubspot.Companies.CompaniesList(): Using path %s", path)
 	if err != nil {
 		fmt.Print(err)
 	}
